@@ -3,9 +3,10 @@ require('dotenv-flow').config({silent: true});
 const env = process.env;
 const db = require('../../../config/db.config');
 const Get = require('../../sequelize/get');
+const UcFirst = require('../../utils/ucFirst');
 
 async function getId(slug)  {
-    return await Get.item(db.Role, {where: {slug: slug}}).then(i => i._id)
+    // return await Get.item(db.Role, {where: {slug: slug}}).then(i => i._id)
 }
 
 module.exports = {
@@ -75,13 +76,45 @@ module.exports = {
      execute: async (client, interaction) => {
          try {
             const guild = client.guilds.cache.get(env.SERVER);
-            const options = interaction.options;
+            const options = interaction.options._hoistedOptions;
             const name = options._subcommand;
             const user = interaction.member.user.id;
+            const thumbnails = require('../../../config/thumbnails.json');
+
+            let application, type, link, description;
+            for (let option in options) {
+                option = options[option];
+                console.log(option)
+                switch (option.name) {
+                    case 'application':
+                        application = option.value
+                        break;
+                    case 'type':
+                        type = option.value
+                        break;
+                    case 'link':
+                        link = option.value
+                        break;
+                    case 'description':
+                        description = option.value
+                        break;
+                    default:
+                        break;
+                }
+            }
+            console.log(interaction.member.user)
             const embed = new MessageEmbed()
-                .setTitle('Commande PR')
-                .addField(`PR :)`, 'message')
-                
+                .setColor(thumbnails[application].color)
+                .setTitle(`Une nouvelle pull request a été postée !`)
+                .setURL(link)
+                .setThumbnail(thumbnails[application].link)
+                .addFields(
+                    {name: 'Application', value: UcFirst.format(application), inline: true},
+                    {name: 'Auteur', value: interaction.member.user.username, inline: true},
+                    {name: 'Type', value: UcFirst.format(type)},
+                    {name: 'Description', value: UcFirst.format(description)}
+                )
+            ;      
             const mesg = await interaction.reply({ embeds: [embed], fetchReply: true });
 
         } catch (err) {

@@ -1,0 +1,22 @@
+{
+    "adriver": {
+        "link": "https://adrivergroup.co/build/images/favicon_group.b1efb48d.png",
+        "color": "#042040"
+    },
+    "mobads": {
+        "link": "http://opti.mobads.tech/build/images/new_logo.0d34fce5.png",
+        "color": "#38bac1"
+    },
+    "proxy": {
+        "link": "https://media-exp3.licdn.com/dms/image/C4D0BAQF1rQ4N1PUk4w/company-logo_100_100/0/1608209915422?e=2159024400&v=beta&t=EOg9CMqnfwwmnmnMdBXsZir3V78tozOfkufxTEXfTEU",
+        "color": "#ff0000"
+    },
+    "simulation": {
+        "link": "https://media-exp3.licdn.com/dms/image/C4D0BAQF1rQ4N1PUk4w/company-logo_100_100/0/1608209915422?e=2159024400&v=beta&t=EOg9CMqnfwwmnmnMdBXsZir3V78tozOfkufxTEXfTEU",
+        "color": "#ae41cc"
+    },
+    "vitrine": {
+        "link": "https://media-exp3.licdn.com/dms/image/C4D0BAQF1rQ4N1PUk4w/company-logo_100_100/0/1608209915422?e=2159024400&v=beta&t=EOg9CMqnfwwmnmnMdBXsZir3V78tozOfkufxTEXfTEU",
+        "color": "#fff700"
+    }
+}

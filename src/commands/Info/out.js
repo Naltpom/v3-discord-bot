@@ -15,12 +15,12 @@ module.exports = {
     description: 'outs commands',
     roles: [
         {
-            id: getId('tech'),
+            // id: getId('tech'),
             type: 2,
             permission: true
         },
         {
-            id: getId('cr'),
+            // id: getId('cr'),
             type: 2,
             permission: true
         }
