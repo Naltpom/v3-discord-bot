@@ -1,0 +1,6 @@
+/node_modules
+/.idea
+/.env.local
+/var/*
+!/var/cache/
+database.sqlite
