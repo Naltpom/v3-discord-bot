@@ -76,15 +76,15 @@ module.exports = {
      execute: async (client, interaction) => {
          try {
             const guild = client.guilds.cache.get(env.SERVER);
-            const options = interaction.options._hoistedOptions;
             const name = options._subcommand;
             const user = interaction.member.user.id;
+            
+            const options = interaction.options._hoistedOptions;
             const thumbnails = require('../../../config/thumbnails.json');
 
             let application, type, link, description;
             for (let option in options) {
                 option = options[option];
-                console.log(option)
                 switch (option.name) {
                     case 'application':
                         application = option.value
@@ -102,7 +102,7 @@ module.exports = {
                         break;
                 }
             }
-            console.log(interaction.member.user)
+
             const embed = new MessageEmbed()
                 .setColor(thumbnails[application].color)
                 .setTitle(`Une nouvelle pull request a été postée !`)
