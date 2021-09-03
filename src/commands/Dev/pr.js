@@ -11,6 +11,11 @@ async function getId(slug)  {
     // return await Get.item(db.Role, {where: {slug: slug}}).then(i => i._id)
 }
 
+function isValidURL(string) {
+    const res = string.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
+    return (res !== null)
+};
+
 module.exports = {
     name: 'pr',
     description: 'Send URL of a pull request',
@@ -103,6 +108,11 @@ module.exports = {
                         break;
                 }
             }
+
+            if (!isValidURL(link)) {
+                return interaction.reply({ content: '⚠️ ⚠️ ⚠️ Veuillez saisir une URL valid ⚠️ ⚠️ ⚠️ ', ephemeral: true });
+            }
+
             const embed = new MessageEmbed()
                 .setColor(thumbnails[application].color)
                 .setTitle(`Une nouvelle pull request a été postée !`)
