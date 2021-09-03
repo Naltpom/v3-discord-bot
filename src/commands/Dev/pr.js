@@ -75,12 +75,11 @@ module.exports = {
      */
      execute: async (client, interaction) => {
          try {
-            const guild = client.guilds.cache.get(env.SERVER);
-            const name = options._subcommand;
-            const user = interaction.member.user.id;
-            
+            const guild = client.guilds.cache.get(env.SERVER);           
             const options = interaction.options._hoistedOptions;
             const thumbnails = require('../../../config/thumbnails.json');
+            const name = options._subcommand;
+            const user = interaction.member.user.id;
 
             let application, type, link, description;
             for (let option in options) {
@@ -115,7 +114,15 @@ module.exports = {
                     {name: 'Description', value: UcFirst.format(description)}
                 )
             ;      
-            const mesg = await interaction.reply({ embeds: [embed], fetchReply: true });
+            const mesg = await interaction.reply({ embeds: [embed], fetchReply: true })
+                .then(msg => {
+                    const emojisToAdd = ['👌', '⚠️', '🤞', '🤙', '🛑'];
+
+                    emojisToAdd.map(emoji => {
+                        msg.react(emoji).catch(e => console.error(e));
+                    })
+                })
+                .catch(console.error);
 
         } catch (err) {
             console.log("Something Went Wrong => ", err);
