@@ -28,8 +28,6 @@ module.exports = async (client, interaction) => {
       const embed = new MessageEmbed()
       const member = interaction.member;
       const userRoles = member.roles.member._roles;
-      console.log(interaction)
-
       
       if ('pr' === customId.substring(0, 2)) {
         const prId = await Get.item(db.Pr, {where: {slug: interaction.message.id}}).then(pr => pr)
@@ -85,7 +83,6 @@ module.exports = async (client, interaction) => {
 
 
           interaction.reply({ content: '🤙 PR mergé,\nVoulez-vous supprimer le channel de la PR ?', components: [components] });
-          // console.log(interaction.message)
 
         } else if ('pr-good' === customId) {
 
@@ -170,9 +167,6 @@ module.exports = async (client, interaction) => {
 
           interaction.reply({ content: '🛑 PR aborded,\nVoulez-vous supprimer le channel de la PR ?', components: [components] });
         }
-
-        interaction.process
-        console.log(customId)
 
       }// end PR interaction
       if ('rm-channel' === customId) {

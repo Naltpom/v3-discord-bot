@@ -13,9 +13,6 @@ class Create {
         data.map(item => {
            table.findOne({where: {_id: item.id}}).then(obj => {
                 if (null == obj) {
-                    if (table === 'Roles') {
-                        console.log(item.name)
-                    }
                     table.create({
                         name: item.name,
                         slug: sluger(item.name, {lower: true}),

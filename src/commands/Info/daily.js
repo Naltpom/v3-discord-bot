@@ -47,8 +47,6 @@ module.exports = {
                 default:
                     break;
             }
-            console.log(options[option])   
-            console.log(userId, roleId)
         }
       const mesg = await interaction.reply(`@${userId}, @&${roleId}`);
 

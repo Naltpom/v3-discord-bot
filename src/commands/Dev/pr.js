@@ -151,7 +151,6 @@ module.exports = {
             const int = await db.Pr.findAndCountAll().then(e => e)
 
             const category = (await guild.channels.fetch(undefined)).find(cat => cat.name === 'pr' && cat.type === 'GUILD_CATEGORY')
-            console.log(category)
 
             guild.channels.create(`pr-${int.count + 1}`, {parent: category})
                 .then(async channel => {
