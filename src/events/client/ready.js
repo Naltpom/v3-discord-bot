@@ -17,12 +17,14 @@ module.exports = async (client, Logger) => {
     // declare a promise to get time to collect all data before insert in DB
     Promise.all(guilds.map(async (guild) => {
         // check if role exist othewire create then
+        console.log('Init roles')
         neededRoles.map(role => {
-            const findRole = guild.roles.cache.find(guildRole => {console.log(`${guildRole.name.toString()}`, role.toString(), guildRole.name.toString() === role.toString());return guildRole.name.toString() === role.toString()})
+            const findRole = guild.roles.cache.find(guildRole => guildRole.name.toString() === role.toString())
             if (!findRole) guild.roles.create().then(e => {e.setName(role), console.log(`${role} create`)})
         })
 
         // // check if channel exist othewire create then
+        // console.log('Init channels')
         // neededChannel.map(channel => {
         //     const findChannel = guild.channels.cache.find(guildChannel => {console.log(`${guildChannel.name.toString()}`, channel.toString(), guildChannel.name.toString() === channel.toString());return guildChannel.name.toString() === channel.name.toString()})
         //     if (!findChannel) guild.channels.create().then(e => {e.setName(channel.name), console.log(`${role} create`)})
