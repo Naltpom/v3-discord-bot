@@ -300,7 +300,7 @@ async function remove(obj, db, guild, user) {
     }
     const outMember = await guild.members.fetch(userId);
 
-    const outs = await Get.collection(db.Out, {where: {userId: userId}});
+    const outs = await Get.collection(db.Out, {where: {userId: userId, guild: guild.id}});
     outs.map(async (out) => {
         let startDate = out.startDate, endDate = out.endDate;
         startDate = DateFormater.format(startDate)
