@@ -108,7 +108,7 @@ module.exports = {
             if ('remove' === name) {embed = await remove(options, db, guild, user)}
             
 
-            const mesg = await interaction.reply({ embeds: [embed], fetchReply: true });
+            const mesg = await interaction.reply({ embeds: [embed], ephemeral: true });
 
         } catch (err) {
             console.log("Something Went Wrong => ", err);

@@ -1,8 +1,10 @@
-const { Client, Interaction, MessageEmbed } = require('discord.js');
+const { channel } = require('diagnostics_channel');
+const { Client, Interaction, MessageEmbed, MessageActionRow, MessageButton } = require('discord.js');
 require('dotenv-flow').config({silent: true});
 const env = process.env;
 const db = require('../../../config/db.config');
 const Get = require('../../sequelize/get');
+const Create = require('../../sequelize/create');
 const UcFirst = require('../../utils/ucFirst');
 
 async function getId(slug)  {
@@ -101,7 +103,6 @@ module.exports = {
                         break;
                 }
             }
-
             const embed = new MessageEmbed()
                 .setColor(thumbnails[application].color)
                 .setTitle(`Une nouvelle pull request a été postée !`)
@@ -114,15 +115,88 @@ module.exports = {
                     {name: 'Description', value: UcFirst.format(description)}
                 )
             ;      
-            const mesg = await interaction.reply({ embeds: [embed], fetchReply: true })
-                .then(msg => {
-                    const emojisToAdd = ['👌', '⚠️', '🤞', '🤙', '🛑'];
 
-                    emojisToAdd.map(emoji => {
-                        msg.react(emoji).catch(e => console.error(e));
-                    })
+            const components = new MessageActionRow()
+                .addComponents(
+                    new MessageButton()
+                        .setCustomId('pr-merge')
+                        .setLabel('🤙 MERGE')
+                        .setStyle('SUCCESS')
+                )
+                .addComponents(
+                    new MessageButton()
+                        .setCustomId('pr-good')
+                        .setLabel('👌 GOOD')
+                        .setStyle('SUCCESS')
+                )
+                .addComponents(
+                    new MessageButton()
+                        .setCustomId('pr-warning')
+                        .setLabel('⚠️ NEED CHANGE')
+                        .setStyle('PRIMARY')
+                )
+                .addComponents(
+                    new MessageButton()
+                        .setCustomId('pr-fixed')
+                        .setLabel('🤞 FIXED')
+                        .setStyle('SECONDARY')
+                )
+                .addComponents(
+                    new MessageButton()
+                        .setCustomId('pr-aborded')
+                        .setLabel('🛑 ANNULE')
+                        .setStyle('DANGER')
+                )
+
+            const int = await db.Pr.findAndCountAll().then(e => e)
+
+            const category = (await guild.channels.fetch(undefined)).find(cat => cat.name === 'pr' && cat.type === 'GUILD_CATEGORY')
+            console.log(category)
+
+            guild.channels.create(`pr-${int.count + 1}`, {parent: category})
+                .then(async channel => {
+                    channel.send(`<@${interaction.member.user.id}>`)
+
+                    const boardEmbed = new MessageEmbed()
+                        .setTitle('Info Board')
+                    return [
+                        await channel.send({ embeds: [embed], components: [components], fetchReply: true }), 
+                        await channel.send({embeds: [boardEmbed]})
+                    ]
                 })
-                .catch(console.error);
+                .then(msgs => {
+                    db.Pr.create({
+                        _id: msgs[0].id,
+                        userId: interaction.member.user.id,
+                        slug: msgs[0].id,
+                        boardId: msgs[1].id,
+                        application: application,
+                        type: type,
+                        link: link,
+                        description: description,
+                        status: 'pr-created',
+                    });
+                })
+                .then(async e =>  {
+                    const msg = await interaction.reply({ content: 'PR Created', ephemeral: true })
+                        .catch(console.error)
+
+                })
+                .catch(console.error)
+
+
+
+
+            // const mesg = await interaction.reply({ embeds: [embed], components: [components], fetchReply: true })
+                // .then(msg => {
+                //     const emojisToAdd = ['👌', '⚠️', '🤞', '🤙', '🛑'];
+
+                //     emojisToAdd.map(emoji => {
+                //         msg.react(emoji).catch(e => console.error(e));
+                //     })
+                // })
+                // .catch(console.error);
+
 
         } catch (err) {
             console.log("Something Went Wrong => ", err);

@@ -17,6 +17,21 @@ class DateFormat
 
         return `${day} ${date.getDate()} ${month} ${date.getFullYear()}`;
     }
+
+    static now()
+    {
+        const date = new Date()
+
+        const curr_date = date.getDate().toString().padStart(2, '0');
+        const curr_month = date.getMonth().toString().padStart(2, '0');
+        const curr_year = date.getFullYear().toString().padStart(2, '0');
+        const curr_hour = date.getHours().toString().padStart(2, '0');
+        const curr_min = date.getMinutes().toString().padStart(2, '0');
+
+        const dateFormated = `${curr_date}/${curr_month}/${curr_year} à ${curr_hour}:${curr_min}`;
+
+        return dateFormated
+    }
 }
 
 module.exports = DateFormat;
