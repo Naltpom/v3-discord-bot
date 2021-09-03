@@ -1,10 +1,7 @@
-const { channel } = require('diagnostics_channel');
 const { Client, Interaction, MessageEmbed, MessageActionRow, MessageButton } = require('discord.js');
 require('dotenv-flow').config({silent: true});
 const env = process.env;
 const db = require('../../../config/db.config');
-const Get = require('../../sequelize/get');
-const Create = require('../../sequelize/create');
 const UcFirst = require('../../utils/ucFirst');
 
 async function getId(slug)  {
