@@ -5,6 +5,7 @@ module.exports = model;
 function model(sequelize) {
     const attributes = {
         name: { type: DataTypes.STRING, allowNull: false },
+        guild: { type: DataTypes.STRING, allowNull: false, defaultValue: 'false' },
         nickname: { type: DataTypes.STRING, allowNull: false },
         _id: { type: DataTypes.STRING, allowNull: false },
         role: { type: DataTypes.JSON, allowNull: false },

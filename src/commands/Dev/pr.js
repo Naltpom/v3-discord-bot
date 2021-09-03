@@ -5,7 +5,7 @@ const db = require('../../../config/db.config');
 const UcFirst = require('../../utils/ucFirst');
 
 async function getId(slug)  {
-    // return await Get.item(db.Role, {where: {slug: slug}}).then(i => i._id)
+    //return await Get.item(db.Role, {where: {slug: slug, guild: guildId}}).then(i => i._id)
 }
 
 function isValidURL(string) {
@@ -79,7 +79,7 @@ module.exports = {
      */
      execute: async (client, interaction) => {
          try {
-            const guild = client.guilds.cache.get(env.SERVER);           
+            const guild = interaction.guild;           
             const options = interaction.options._hoistedOptions;
             const thumbnails = require('../../../config/thumbnails.json');
             const name = options._subcommand;

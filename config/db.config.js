@@ -30,7 +30,6 @@ async function initialize() {
     db.Out = require('../src/models/out.model')(sequelize);
     db.User = require('../src/models/user.model')(sequelize);
     db.CrLeaderboard = require('../src/models/crLeaderboard.model')(sequelize);
-    db.Command = require('../src/models/command.model')(sequelize);
     db.Pr = require('../src/models/pr.model')(sequelize);
 
     // sync all models with database

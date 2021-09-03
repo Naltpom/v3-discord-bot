@@ -33,13 +33,13 @@ module.exports = async (client, interaction) => {
         const prId = await Get.item(db.Pr, {where: {slug: interaction.message.id}}).then(pr => pr)
         const board = interaction.channel.messages
         .fetch(
-          await Get.item(db.Pr, {where: {slug: interaction.message.id}})
+          await Get.item(db.Pr, {where: {slug: interaction.message.id, guild: interaction.guild.id}})
             .then(pr => pr.boardId)
         )
 
         if ('pr-merge' === customId) {
           // must be author or leadDev
-          if ((!hadRole(userRoles, await getId('lead-dev')) && !(member.user.id === prId.userId))) {
+          if ((!hadRole(userRoles, await getId('lead-dev', guild)) && !(member.user.id === prId.userId))) {
             return interaction.reply({ content: '⚠️ ⚠️ ⚠️ Tu n\'as pas l\'autorisation ⚠️ ⚠️ ⚠️ ', ephemeral: true });
           }
           const button = await interaction.channel.messages
@@ -108,7 +108,7 @@ module.exports = async (client, interaction) => {
 
         } else if ('pr-fixed' === customId) {
           // must be author
-          if ((!hadRole(userRoles, await getId('lead-dev')) && !(member.user.id === prId.userId))) {
+          if ((!hadRole(userRoles, await getId('lead-dev', guild)) && !(member.user.id === prId.userId))) {
             return interaction.reply({ content: '⚠️ ⚠️ ⚠️ Tu n\'as pas l\'autorisation ⚠️ ⚠️ ⚠️ ', ephemeral: true });
           }
 
@@ -123,7 +123,7 @@ module.exports = async (client, interaction) => {
 
         } else if ('pr-aborded' === customId) {
           // must be author or leadDev
-          if ((!hadRole(userRoles, await getId('lead-dev')) && !(member.user.id === prId.userId))) {
+          if ((!hadRole(userRoles, await getId('lead-dev', guild)) && !(member.user.id === prId.userId))) {
             return interaction.reply({ content: '⚠️ ⚠️ ⚠️ Tu n\'as pas l\'autorisation ⚠️ ⚠️ ⚠️ ', ephemeral: true });
           }
 
@@ -186,8 +186,8 @@ module.exports = async (client, interaction) => {
   }
 };
 
-async function getId(slug)  {
-  return await Get.item(db.Role, {where: {slug: slug}}).then(i => i._id)
+async function getId(slug, guild)  {
+  return await Get.item(db.Role, {where: {slug: slug, guild: guild.id}}).then(i => i._id)
 }
 
 function hadRole(roleList, id) {

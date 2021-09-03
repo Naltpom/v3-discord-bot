@@ -5,6 +5,7 @@ module.exports = model;
 function model(sequelize) {
     const attributes = {
         name: { type: DataTypes.STRING, allowNull: false },
+        guild: { type: DataTypes.STRING, allowNull: false },
         _id: { type: DataTypes.STRING, allowNull: false },
         slug: { type: DataTypes.STRING, allowNull: false },
     };
