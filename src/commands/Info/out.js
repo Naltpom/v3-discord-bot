@@ -7,7 +7,7 @@ const {Op} = require ('Sequelize');
 const DateFormater = require('../../utils/dateFormat');
 
 async function getId(slug)  {
-    return await Get.item(db.Role, {where: {slug: slug}}).then(i => i._id)
+    return await Get.item(db.Role, {where: {slug: slug, guild: guildId}}).then(i => i._id)
 }
 
 module.exports = {
@@ -97,13 +97,13 @@ module.exports = {
      */
     execute: async (client, interaction) => {
         try {
-            const guild = client.guilds.cache.get(env.SERVER);
+            const guild = interaction.guild;
             const options = interaction.options;
             const name = options._subcommand;
             const user = interaction.member.user.id;
             let embed;
-    
-            if ('get' === name) {embed = await get(options, db)}
+
+            if ('get' === name) {embed = await get(options, db, guild)}
             if ('post' === name) {embed = await post(options, db, guild, user)}
             if ('remove' === name) {embed = await remove(options, db, guild, user)}
             
@@ -117,7 +117,7 @@ module.exports = {
 }
 
 
-async function get(obj, db) {
+async function get(obj, db, guild) {
     const nextOptions = obj._hoistedOptions
     const embed = new MessageEmbed()
 
@@ -161,6 +161,7 @@ async function get(obj, db) {
         if ('user' === ob.name) {
             filter = {...filter, userId: ob.value};
         }
+        filter = {...filter, guild: guild.id};
     }
 
     const outs = await Get.collection(db.Out, {where: filter, order: [['startDate', 'ASC']]})
@@ -224,6 +225,7 @@ async function get(obj, db) {
         }
     }    
 
+    console.log('Command => out get')
     return embed
 }
 
@@ -263,6 +265,7 @@ async function post(obj, db, guild, user) {
     db.Out.create({
         userId: userId,
         slug: userId,
+        guild: guild.id,
         startDate: startDate,
         endDate: endDate,
         status: status,
@@ -276,6 +279,7 @@ async function post(obj, db, guild, user) {
         embed.addField(`${outMember.nickname ?? outMember.user.name}`, `*${member.nickname ?? member.user.name}* à defini **${outMember.nickname ?? outMember.user.name}** out le ${startDate}`)
     }
 
+    console.log('Command => out post')
     return embed
 }
 
@@ -313,6 +317,6 @@ async function remove(obj, db, guild, user) {
     const title = (outMember.user.id === member.user.id) ? `${member.nickname ?? member.user.name} a supprimer ses dates out` : `${member.nickname ?? member.user.name} a supprimer les dates out de ${outMember.nickname ?? outMember.user.name}`;
 
     embed.addField(`${title}`, `${message}`)
-
+    console.log('Command => out remove')
     return embed
 }

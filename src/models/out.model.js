@@ -5,6 +5,7 @@ module.exports = model;
 function model(sequelize) {
     const attributes = {
         userId: { type: DataTypes.STRING, allowNull: false },
+        guild: { type: DataTypes.STRING, allowNull: false },
         slug: { type: DataTypes.STRING, allowNull: false },
         startDate: { type: DataTypes.DATE, allowNull: false },
         endDate: { type: DataTypes.DATE, allowNull: false },
