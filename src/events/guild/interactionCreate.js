@@ -88,13 +88,40 @@ module.exports = async (client, interaction) => {
           // console.log(interaction.message)
 
         } else if ('pr-good' === customId) {
+
+          await board.then(msg => {
+            const fetchedMsg = msg;
+            const boardEmbed = msg.embeds[0];
+            boardEmbed.addFields({name: `${interaction.member.nickname}`, value: `good : ${DateFormater.now()}`, inline: false})
+            fetchedMsg.edit({ embeds: [boardEmbed] })
+          })
+
           return interaction.reply({ content: 'Tu as bien validé la pr merci', ephemeral: true });
 
         } else if ('pr-warning' === customId) {
+
+          await board.then(msg => {
+            const fetchedMsg = msg;
+            const boardEmbed = msg.embeds[0];
+            boardEmbed.addFields({name: `${interaction.member.nickname}`, value: `warning : ${DateFormater.now()}`, inline: false})
+            fetchedMsg.edit({ embeds: [boardEmbed] })
+          })
+
           return interaction.reply({ content: 'Tu as bien indiqué un probleme sur la pr merci', ephemeral: true });
 
         } else if ('pr-fixed' === customId) {
           // must be author
+          if ((!hadRole(userRoles, await getId('lead-dev')) && !(member.user.id === prId.userId))) {
+            return interaction.reply({ content: '⚠️ ⚠️ ⚠️ Tu n\'as pas l\'autorisation ⚠️ ⚠️ ⚠️ ', ephemeral: true });
+          }
+          
+          await board.then(msg => {
+            const fetchedMsg = msg;
+            const boardEmbed = msg.embeds[0];
+            boardEmbed.addFields({name: `${interaction.member.nickname}`, value: `fixed : ${DateFormater.now()}`, inline: false})
+            fetchedMsg.edit({ embeds: [boardEmbed] })
+          })
+
           return interaction.reply({ content: 'Tu as bien corrigé les probleme sur la pr merci', ephemeral: true });
 
         } else if ('pr-aborded' === customId) {
