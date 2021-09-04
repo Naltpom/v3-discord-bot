@@ -9,7 +9,7 @@ async function getId(slug)  {
 }
 
 function isValidURL(string) {
-    const res = string.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
+    const res = string.match(/(http(s)?:\/\/.)(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-zA-Z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
     return (res !== null)
 };
 
@@ -173,6 +173,7 @@ module.exports = {
                 .then(msgs => {
                     db.Pr.create({
                         _id: msgs[0].id,
+                        guild: guild.id,
                         userId: interaction.member.user.id,
                         slug: msgs[0].id,
                         boardId: msgs[1].id,
