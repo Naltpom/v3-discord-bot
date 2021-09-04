@@ -5,10 +5,9 @@ const db = require('../../../config/db.config');
 const sluger = require('slugify');
 
 module.exports = async (client, Logger) => {
-    console.log("Bot is Now Ready as", client.user.tag);
+    console.log("Bot is initiating", client.user.tag);
 
     const guilds = client.guilds.cache;
-
     const listRoleModel = [], listChannelModel = [], listUserModel = []
     const neededRoles = ['CR', 'Lead Dev', 'Tech', 'Alternant', 'Out', 'Weekly']
 
@@ -69,5 +68,6 @@ module.exports = async (client, Logger) => {
         Create.syncDb(db.Role, listRoleModel)
         Create.syncDb(db.Channel, listChannelModel)
         Create.syncDb(db.User, listUserModel)
-    })
+    }).then(res => console.log("Bot is Now Ready as", client.user.tag))
+
 }
