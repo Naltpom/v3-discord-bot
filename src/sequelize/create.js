@@ -14,7 +14,6 @@ class Create {
         data.map(item => {
            table.findOne({where: {_id: item.id}}).then(obj => {
                 if (null == obj) {
-                    console.log(`1 : ${item.guildId} ${item.name}`)
                     table.create({
                         name: item.name,
                         guild: item.guildId,
@@ -41,10 +40,6 @@ class Create {
                 })
                 table.findOne({where: {_id: m.user.id}}).then(item => {
                     if (item) {
-                        console.log(`2 : ${m.guild.id} ${m.user.username}`)
-                        if ('Naltpom' === m.user.username) {
-                            console.log(m)
-                        }
                         Logger.log('info',`update ${m.user.username} in DB user`, 'database')
                         return item.update({
                             name: m.user.username,
@@ -54,7 +49,6 @@ class Create {
                         }).catch(e =>  Logger.log('error', e.message, 'database'));
                     } else {
                         Logger.log('info',`create ${m.user.username} in DB user`, 'database')
-                        console.log(`3 : ${m.guild.id} ${m.user.username}`)
 
                         return table.create({
                             name: m.user.username,
@@ -79,13 +73,13 @@ class Create {
                 .then(element => {
                     if (element) { // update
                         try {
-                            element.update(item).catch(err => console.log("Something Went Wrong => ",err))
+                            element.update(item)
                         } catch (err) {
                             console.log("Something Went Wrong => ",err);
                         }
                     } else { // create
                         try {
-                            table.create(item).catch(err => console.log("Something Went Wrong => ",err))
+                            table.create(item)
                         } catch (err) {
                             console.log("Something Went Wrong => ",err);
                         }
