@@ -1,4 +1,6 @@
 const { Client, Interaction, MessageEmbed  } = require("discord.js");
+const Get = require('../../sequelize/get')
+const db = require('../../../config/db.config')
 
 module.exports = {
     name: 'daily',
@@ -32,23 +34,48 @@ module.exports = {
   execute: async (client, interaction) => {
     try {  
         const options = interaction.options._hoistedOptions;
-        let userId, roleId;
+        const guild = interaction.guild;  
 
-
-
+        // collect default role to ping if not parameters set
+        const defaultRoleId = await Get.item(db.Role, {where: {slug: 'tech', guild: guild.id}}).then(i => i._id);
+        
+        // create message
+        let mesg = (options.length !== 0) ? '' : `<@&${defaultRoleId}>`;
         for (let option in options) {
             switch (options[option].name) {
                 case 'user':
-                    userId = options[option].value;
+                    mesg += `<@${options[option].value}> `;
                     break;
                 case 'role':
-                    roleId = options[option].value;
+                    mesg += `<@&${options[option].value}> `;
                     break;
                 default:
                     break;
             }
         }
-      const mesg = await interaction.reply(`@${userId}, @&${roleId}`);
+
+        mesg += `\nVous êtes attendu dans le channel \`Daily\` pour le daily !`
+        
+        // collect the voice channel to send the daily users
+        const dbChannel = await Get.item(db.Channel, {where: {slug: 'daily', guild: interaction.guild.id}}).then(i => i === null ? null : i._id)
+
+        // if channel exist
+        if (null !== dbChannel) {
+            // get channel, then collect all invitation of the channel, then collect the last code created
+            const channelDaily = await guild.channels.fetch(dbChannel)
+            let validCode = await channelDaily.fetchInvites(i => i)
+            validCode = validCode.map(i => i.code)
+            validCode = validCode[validCode.length - 1]
+            
+            // if no code is set, then create a new one
+            const codeInvite = (validCode !== undefined) ? validCode : await channelDaily.createInvite({
+                reason: 'le daily a commencais',
+                maxAge: 900 // set code valid 15 minutes
+            }).then(e => e.code)
+            mesg += `\nhttps://discord.gg/${codeInvite}`
+        }
+
+        await interaction.reply(mesg);
 
     } catch (err) {
       console.log("Something Went Wrong => ", err);
