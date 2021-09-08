@@ -191,20 +191,6 @@ module.exports = {
                 })
                 .catch(console.error)
 
-
-
-
-            // const mesg = await interaction.reply({ embeds: [embed], components: [components], fetchReply: true })
-                // .then(msg => {
-                //     const emojisToAdd = ['👌', '⚠️', '🤞', '🤙', '🛑'];
-
-                //     emojisToAdd.map(emoji => {
-                //         msg.react(emoji).catch(e => console.error(e));
-                //     })
-                // })
-                // .catch(console.error);
-
-
         } catch (err) {
             console.log("Something Went Wrong => ", err);
         }
