@@ -129,6 +129,7 @@ async function get(obj, db, guild) {
 
         if ('when' === ob.name) {
             const currentDate = new Date();
+            embed.setTitle('Liste de toutes lse absences');
             if ('future' === ob.value) {
                 embed.setTitle('Liste des futures absences');
                 filter = {
