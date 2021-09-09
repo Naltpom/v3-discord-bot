@@ -49,7 +49,7 @@ module.exports = async (client, Logger) => {
             let rolelist = {};
             m._roles.map(r => {
                 let rl = guild.roles.cache.get(r)
-                rolelist[rl.name.toLowerCase()] = r
+                rolelist[sluger(rl.name.toLowerCase(), {lower: true})] = r
             })
 
             listUserModel.push({

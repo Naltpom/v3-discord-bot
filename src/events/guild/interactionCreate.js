@@ -3,6 +3,7 @@ const Get = require("../../sequelize/get");
 require('dotenv-flow').config({silent: true});
 const env = process.env;
 const DateFormater = require('../../utils/dateFormat');
+const db = require('../../../config/db.config');
 
 /**
  *
@@ -178,6 +179,54 @@ module.exports = async (client, interaction) => {
         interaction.reply('Contacter un admin pour supprimer le channel')
       }
       
+      if ('alternant' === customId.substring(0, 9)) {
+        // console.log(interaction)
+        if ('alternant-valid' === customId) {
+          return
+        } else if ('alternant-delete' === customId) {
+          return
+        }  
+        const mesg = await interaction.channel.messages
+          .fetch(interaction.message.reference.messageId)
+        const embed = mesg.embeds[0];
+      
+        embed.fields[0].value = (embed.fields[0].value - 1).toString();
+
+        const alternantId = customId.substring(14);
+        if ('alternant-yes' === customId.substring(0, 13)) {
+          embed.setDescription(embed.description + `\n✅ <@${alternantId}> sera en present`)
+        } else if ('alternant-non' === customId.substring(0, 13)) {
+          embed.setDescription(embed.description + `\n⛔ <@${alternantId}> sera en absent`)
+          // define next week monday date
+          //
+          const days =[1,7,6,5,4,3,2];
+          const d = new Date();
+          
+          const startDate = d.setDate(d.getDate()+days[d.getDay()]);
+          const endDate = d.setDate(d.getDate()+days[d.getDay()]+6);
+          let status = false;
+          if (d >= startDate && d <= endDate) {
+            status = true;
+          }
+
+          db.Out.create({
+            userId: alternantId,
+            slug: alternantId,
+            guild: guild.id,
+            startDate: startDate,
+            endDate: endDate,
+            status: status,
+          });
+
+        }
+        console.log(embed.fields[0].value)
+        if (parseInt(embed.fields[0].value) === 0) {
+          delete embed.fields[0]
+        }
+        await mesg.edit({ embeds: [embed], ephemeral: true  })
+        await interaction.message.delete()
+      }
+
 
     } // end isButton
 
