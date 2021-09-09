@@ -46,7 +46,7 @@ module.exports = {
                 {
                     name: 'user',
                     description: 'get a specific user out info',
-                    require: false,
+                    required: false,
                     type: 6,
                 }
             ],
@@ -59,19 +59,19 @@ module.exports = {
                 {
                     name: 'date_start',
                     description: 'set date start',
-                    require: true,
+                    required: true,
                     type: 3,
                 },
                 {
                     name: 'date_end',
                     description: 'set date end',
-                    require: true,
+                    required: false,
                     type: 3,
                 },
                 {
                     name: 'user',
                     description: 'get a specific user out info',
-                    require: false,
+                    required: false,
                     type: 6,
                 }
             ],
@@ -84,7 +84,7 @@ module.exports = {
                 {
                     name: 'user',
                     description: 'get a specific user out info',
-                    require: false,
+                    required: true,
                     type: 6,
                 }
             ],
