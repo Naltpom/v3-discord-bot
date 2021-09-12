@@ -36,7 +36,7 @@ module.exports = {
                     description: 'type of application',
                     required: true,
                     type: 3,
-                    choices: [ // name = projet , value => url du depot
+                    choices: [
                         {name: "Current", value: "current"},
                         {name: "Future", value: "future"},
                         {name: "Previous", value: "previous"},
@@ -80,7 +80,17 @@ module.exports = {
             name: 'remove',
             description: 'pull request url link',
             type: 1,
-            options: [ 
+            options: [
+                {
+                    name: 'when',
+                    description: 'type of application',
+                    required: true,
+                    type: 3,
+                    choices: [
+                        {name: "Current", value: "current"},
+                        {name: "Future", value: "future"},
+                    ]
+                },
                 {
                     name: 'user',
                     description: 'get a specific user out info',
@@ -121,7 +131,7 @@ async function get(obj, db, guild) {
     const nextOptions = obj._hoistedOptions
     const embed = new MessageEmbed()
 
-    let filter = {};
+    let filter = {guild: guild.id};
     let filterUser = {};
     
     for (let option in nextOptions) {
@@ -162,7 +172,6 @@ async function get(obj, db, guild) {
         if ('user' === ob.name) {
             filter = {...filter, userId: ob.value};
         }
-        filter = {...filter, guild: guild.id};
     }
 
     const outs = await Get.collection(db.Out, {where: filter, order: [['startDate', 'ASC']]})
@@ -294,6 +303,7 @@ async function remove(obj, db, guild, user) {
     const nextOptions = obj._hoistedOptions
     let userId = user;
     const member = await guild.members.fetch(user);
+    let filter = {userId: userId, guild: guild.id}
 
     for (let option in nextOptions) {
         const ob = nextOptions[option]
@@ -301,10 +311,35 @@ async function remove(obj, db, guild, user) {
         if ('user' === ob.name /**&& (user === ob.value || user === ob.value)*/) {
             userId = ob.value;
         }
-    }
 
+
+        if ('when' === ob.name) {
+            const currentDate = new Date();
+            if ('future' === ob.value) {
+                embed.setDescription('Suppression des futures absences');
+                filter = {
+                    ...filter,
+                    startDate: {
+                        [Op.gte]: currentDate
+                    },
+                };
+            } else if ('current' === ob.value) {
+                embed.setDescription('Suppression des absences courante');
+                filter = {
+                    ...filter,
+                    startDate: {
+                        [Op.lte]: currentDate
+                    },
+                    endDate: {
+                        [Op.gte]: currentDate
+                    }
+                };
+            } 
+        } 
+    } 
     const outMember = await guild.members.fetch(userId);
-    const outs = await Get.collection(db.Out, {where: {userId: userId, guild: guild.id}});
+    const outs = await Get.collection(db.Out, {where: filter});
+
     let message = (outs.length === 0) ? 'Aucune date trouvé' : '';
 
     outs.map(async (out) => {
