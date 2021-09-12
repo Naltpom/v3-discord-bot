@@ -129,7 +129,7 @@ async function get(obj, db, guild) {
 
         if ('when' === ob.name) {
             const currentDate = new Date();
-            embed.setTitle('Liste de toutes lse absences');
+            embed.setTitle('Liste de toutes les absences');
             if ('future' === ob.value) {
                 embed.setTitle('Liste des futures absences');
                 filter = {
@@ -224,7 +224,10 @@ async function get(obj, db, guild) {
             }
             embed.addField(`${userName}`, message)
         }
-    }    
+    } 
+    if (array.length === 0) {
+        embed.setDescription(`Aucune donnée`)
+    }   
 
     console.log('Command => out get')
     return embed
@@ -287,7 +290,6 @@ async function post(obj, db, guild, user) {
 async function remove(obj, db, guild, user) {
     const embed = new MessageEmbed()
     embed.setTitle(`Suppression des dates OUT`);
-    let message = '';
     
     const nextOptions = obj._hoistedOptions
     let userId = user;
@@ -295,13 +297,16 @@ async function remove(obj, db, guild, user) {
 
     for (let option in nextOptions) {
         const ob = nextOptions[option]
-        if ('user' === ob.name && (user === ob.value || user === ob.value)) {
+
+        if ('user' === ob.name /**&& (user === ob.value || user === ob.value)*/) {
             userId = ob.value;
         }
     }
-    const outMember = await guild.members.fetch(userId);
 
+    const outMember = await guild.members.fetch(userId);
     const outs = await Get.collection(db.Out, {where: {userId: userId, guild: guild.id}});
+    let message = (outs.length === 0) ? 'Aucune date trouvé' : '';
+
     outs.map(async (out) => {
         let startDate = out.startDate, endDate = out.endDate;
         startDate = DateFormater.format(startDate)
@@ -315,7 +320,7 @@ async function remove(obj, db, guild, user) {
         await out.destroy();
     })
 
-    const title = (outMember.user.id === member.user.id) ? `${member.nickname ?? member.user.name} a supprimer ses dates out` : `${member.nickname ?? member.user.name} a supprimer les dates out de ${outMember.nickname ?? outMember.user.name}`;
+    const title = (outMember.user.id === member.user.id) ? `${member.nickname ?? member.user.name} a supprimer ses dates out` : `${member.nickname ?? member.user.name} a supprimer les dates out de ${outMember.nickname ?? outMember.user.name ?? outMember.user.username}`;
 
     embed.addField(`${title}`, `${message}`)
     console.log('Command => out remove')
