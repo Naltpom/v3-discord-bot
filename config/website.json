@@ -1,0 +1,29 @@
+{
+    "adriverCorp": {
+        "adriver" : {
+            "name" : "Adriver OPTI",
+            "preprod" : "http://opti.adriver.tech/",
+            "prod" : "https://adriver.io/"
+        },
+        "mobads" : {
+            "name" : "Mobads OPTI",
+            "preprod" : "http://opti.mobads.tech/",
+            "prod" : "https://mobads.io/"
+        },
+        "simulation" : {
+            "name" : "Simulation OPTI",
+            "preprod" : "https://toto.fr",
+            "prod" : "https://toto.fr"
+        },
+        "truck" : {
+            "name" : "Adriver Truck",
+            "preprod" : "https://toto.fr",
+            "prod" : "https://adriver.co/"
+        },
+        "car" : {
+            "name" : "Adriver Car",
+            "preprod" : "https://toto.fr",
+            "prod" : "https://mobads.co/"
+        }
+    }
+}
