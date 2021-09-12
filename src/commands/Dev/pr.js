@@ -3,15 +3,11 @@ require('dotenv-flow').config({silent: true});
 const env = process.env;
 const db = require('../../../config/db.config');
 const UcFirst = require('../../utils/ucFirst');
+const Regex = require('../../utils/regex');
 
 async function getId(slug)  {
     //return await Get.item(db.Role, {where: {slug: slug, guild: guildId}}).then(i => i._id)
 }
-
-function isValidURL(string) {
-    const res = string.match(/(http(s)?:\/\/.)(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-zA-Z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
-    return (res !== null)
-};
 
 module.exports = {
     name: 'pr',
@@ -96,7 +92,11 @@ module.exports = {
                         type = option.value
                         break;
                     case 'link':
-                        link = option.value
+                        if (!Regex.isValidURL(option.value)) {
+                            return interaction.reply({ content: '⚠️ ⚠️ ⚠️ Veuillez saisir une URL valid ⚠️ ⚠️ ⚠️ ', ephemeral: true });
+                        } else {
+                            link = option.value
+                        }
                         break;
                     case 'description':
                         description = option.value
@@ -104,10 +104,6 @@ module.exports = {
                     default:
                         break;
                 }
-            }
-
-            if (!isValidURL(link)) {
-                return interaction.reply({ content: '⚠️ ⚠️ ⚠️ Veuillez saisir une URL valid ⚠️ ⚠️ ⚠️ ', ephemeral: true });
             }
 
             const embed = new MessageEmbed()
