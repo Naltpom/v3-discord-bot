@@ -2,7 +2,7 @@ const { Client, Interaction } = require("discord.js");
 
 module.exports = {
     name: 'summon',
-    description: 'Send URL of a pull request',
+    description: 'Summon someone or role to a channel',
     roles: [
         {
             type: 2,
