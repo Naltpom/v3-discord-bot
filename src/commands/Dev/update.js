@@ -22,6 +22,7 @@ module.exports = {
                 {name: "Simulation OPTI", value: "simulation"},
                 {name: "Adriver Truck", value: "truck"},
                 {name: "Adriver Car", value: "car"},
+                {name: "Datads", value: "datads"},
             ],
         },
         {

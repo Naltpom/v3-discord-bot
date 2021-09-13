@@ -12,18 +12,23 @@
         },
         "simulation" : {
             "name" : "Simulation OPTI",
-            "preprod" : "https://toto.fr",
-            "prod" : "https://toto.fr"
+            "preprod" : "http://simulation.adriver.tech/",
+            "prod" : "http://simulation.adrivergroup.co/"
         },
         "truck" : {
             "name" : "Adriver Truck",
-            "preprod" : "https://toto.fr",
+            "preprod" : "http://qfdmkvh.cluster028.hosting.ovh.net/",
             "prod" : "https://adriver.co/"
         },
         "car" : {
             "name" : "Adriver Car",
-            "preprod" : "https://toto.fr",
+            "preprod" : "http://lfrfvtj.cluster028.hosting.ovh.net/",
             "prod" : "https://mobads.co/"
+        },
+        "datads" : {
+            "name" : "Datads",
+            "preprod" : "http://bzjiiwq.cluster030.hosting.ovh.net/",
+            "prod" : "https://adrivergroup.co/"
         }
     }
 }
