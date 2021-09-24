@@ -3,16 +3,20 @@ const env = process.env;
 const Create = require('../../sequelize/create');
 const db = require('../../../config/db.config');
 const sluger = require('slugify');
+const cronIndex = require('../../cron/_index')
+const cron = require('cron');
+
 
 module.exports = async (client, Logger) => {
     console.log("Bot is initiating", client.user.tag);
+    const guild = await client.guilds.cache.get('819655278265761883');
 
     const guilds = client.guilds.cache;
     const listRoleModel = [], listChannelModel = [], listUserModel = []
     const neededRoles = ['CR', 'Lead Dev', 'Tech', 'Alternant', 'Out', 'Weekly']
 
     // declare a promise to get time to collect all data before insert in DB
-    Promise.all(guilds.map(async (guild) => {
+    await Promise.all(guilds.map(async (guild) => {
         // check if role exist othewire create then
         console.log('Init roles')
         neededRoles.map(role => {
@@ -68,6 +72,17 @@ module.exports = async (client, Logger) => {
         Create.syncDb(db.Role, listRoleModel)
         Create.syncDb(db.Channel, listChannelModel)
         Create.syncDb(db.User, listUserModel)
-    }).then(res => console.log("Bot is Now Ready as", client.user.tag))
+    }).then(async res =>  { console.log("Bot is Now Ready as", client.user.tag) })
+
+
+
+    cronIndex.Cr.reminder(cron, '0 00 18 * * MON-FRI', db, guild, 'first')
+    cronIndex.Cr.reminder(cron, '0 45 21 * * MON-FRI', db, guild, 'second')
+    cronIndex.Cr.reminder(cron, '0 00 22 * * MON-FRI', db, guild, 'last')
+    cronIndex.Cr.lead(cron, '10 0 22 * * FRI', db, guild)
+
+
+
+
 
 }
