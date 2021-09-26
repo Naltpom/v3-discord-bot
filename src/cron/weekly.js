@@ -1,7 +1,7 @@
 const Logger = require('../logger/logger');
 const Get = require('../Sequelize/get');
 
-class Weekly
+class CronWeekly
 {
     static async reminder (cron, scheduled, db, guild) {
 
@@ -21,5 +21,4 @@ class Weekly
     }
 }
 
-module.exports = Weekly;
-0
+module.exports = CronWeekly;

@@ -9,6 +9,7 @@ class CronCr
     static reminder (cron, scheduled, db, guild, reminder) {
         const scheduledMessage = new cron.CronJob(scheduled, async () => {
             try {
+                Logger.log('info',`{Class: CronCr, function: reminder(), params: ${scheduled}} `, 'Cron')
         
                 const channelId = await Get.item(db.Channel, {where: {slug: '_cr_tech_', guild: guild.id}}).then(i => i._id)
                 const authors = await guild.channels.cache.get(channelId.toString()).messages.fetch()
@@ -79,7 +80,7 @@ class CronCr
                 guild.channels.cache.get(channelId.toString()).send(reply);
 
             } catch (err) {
-                console.log("Something Went Wrong => ", err);
+                Logger.log('error',`{Class: CronCr, function: reminder(), Something Went Wrong => ${err}} `, 'Cron', err)
             }
 
         }, null, true, 'Europe/Paris');
@@ -90,6 +91,7 @@ class CronCr
     static async lead (cron, scheduled, db, guild) {
         const scheduledMessage = new cron.CronJob(scheduled, async () => {
             try {
+                Logger.log('info',`{Class: CronCr, function: lead(), params: ${scheduled}} `, 'Cron')
                 const channelId = await Get.item(db.Channel, {where: {slug: '_cr_tech_', guild: guild.id}}).then(i => i._id)
                 let users = await db.CrLeaderboard.findAll({
                     attributes: [
@@ -144,7 +146,7 @@ class CronCr
                 guild.channels.cache.get(channelId.toString()).send({embeds: [embed]});
 
             } catch (err) {
-                console.log("Something Went Wrong => ", err);
+                Logger.log('error',`{Class: CronCr, function: lead(), Something Went Wrong => ${err}} `, 'Cron', err)
             }
 
         }, null, true, 'Europe/Paris');
