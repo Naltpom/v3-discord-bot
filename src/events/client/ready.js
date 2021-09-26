@@ -82,7 +82,8 @@ module.exports = async (client, Logger) => {
     cronIndex.Cr.lead(cron, '10 0 22 * * FRI', db, guild)
     // WEEKLY
     cronIndex.Weekly.reminder(cron, '0 0 16 * * FRI', db, guild)
-
+    // ROLE
+    cronIndex.Role.outCheck(cron, '0 3 * * *', db, guilds)
 
 
 
