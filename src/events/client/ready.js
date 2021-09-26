@@ -9,7 +9,7 @@ const cron = require('cron');
 
 module.exports = async (client, Logger) => {
     console.log("Bot is initiating", client.user.tag);
-    const guild = await client.guilds.cache.get('819655278265761883');
+    const guild = await client.guilds.cache.get(env.SERVER);
 
     const guilds = client.guilds.cache;
     const listRoleModel = [], listChannelModel = [], listUserModel = []
@@ -75,11 +75,13 @@ module.exports = async (client, Logger) => {
     }).then(async res =>  { console.log("Bot is Now Ready as", client.user.tag) })
 
 
-
+    // CR
     cronIndex.Cr.reminder(cron, '0 00 18 * * MON-FRI', db, guild, 'first')
     cronIndex.Cr.reminder(cron, '0 45 21 * * MON-FRI', db, guild, 'second')
     cronIndex.Cr.reminder(cron, '0 00 22 * * MON-FRI', db, guild, 'last')
     cronIndex.Cr.lead(cron, '10 0 22 * * FRI', db, guild)
+    // WEEKLY
+    cronIndex.Weekly.reminder(cron, '0 0 16 * * FRI', db, guild)
 
 
 
