@@ -5,12 +5,11 @@ const db = require('../../../config/db.config');
 const sluger = require('slugify');
 const cronIndex = require('../../cron/_index')
 const cron = require('cron');
-
+const NotionHandler = require('../../intervals/notionHandler');
 
 module.exports = async (client, Logger) => {
     console.log("Bot is initiating", client.user.tag);
     const guild = await client.guilds.cache.get(env.SERVER);
-
     const guilds = client.guilds.cache;
     const listRoleModel = [], listChannelModel = [], listUserModel = []
     const neededRoles = ['CR', 'Lead Dev', 'Tech', 'Alternant', 'Out', 'Weekly']
@@ -72,8 +71,16 @@ module.exports = async (client, Logger) => {
         Create.syncDb(db.Role, listRoleModel)
         Create.syncDb(db.Channel, listChannelModel)
         Create.syncDb(db.User, listUserModel)
-    }).then(async res =>  { console.log("Bot is Now Ready as", client.user.tag) })
+    }).then(async res =>  { 
+        console.log("Bot is Now Ready as", client.user.tag);
+        
+    })
+    
 
+    
+    setInterval(() => {
+        NotionHandler.handle(client);
+    }, 30000);
 
     // CR
     cronIndex.Cr.reminder(cron, '0 00 18 * * MON-FRI', db, guild, 'first')
@@ -84,6 +91,7 @@ module.exports = async (client, Logger) => {
     cronIndex.Weekly.reminder(cron, '0 0 16 * * FRI', db, guild)
     // ROLE
     cronIndex.Role.outCheck(cron, '0 3 * * *', db, guilds)
+
 
 
 
