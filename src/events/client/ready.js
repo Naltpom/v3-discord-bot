@@ -11,6 +11,38 @@ module.exports = async (client, Logger) => {
     console.log("Bot is initiating", client.user.tag);
     const guild = await client.guilds.cache.get(env.SERVER);
     const guilds = client.guilds.cache;
+    syncData(guilds, Logger)
+    // Update DB at 4am
+    new cron.CronJob('0 00 04 * * MON-FRI', async () => {
+        try {
+            syncData(guilds, Logger)
+        } catch (err) {
+            Logger.log('error',`{Class: CronCr, function: reminder(), Something Went Wrong => ${err}} `, 'Cron', err)
+        }
+    }, null, true, 'Europe/Paris');
+
+
+    console.log("Bot is Now Ready as", client.user.tag);
+    
+    // collect new Notion feed
+    setInterval(() => {
+        NotionHandler.handle(client);
+    }, 30000);
+
+    // CR
+    cronIndex.Cr.reminder(cron, '0 00 18 * * MON-FRI', db, guild, 'first')
+    cronIndex.Cr.reminder(cron, '0 45 21 * * MON-FRI', db, guild, 'second')
+    cronIndex.Cr.reminder(cron, '0 00 22 * * MON-FRI', db, guild, 'last')
+    cronIndex.Cr.lead(cron, '10 0 22 * * FRI', db, guild)
+    // WEEKLY
+    cronIndex.Weekly.reminder(cron, '0 0 16 * * FRI', db, guild)
+    // ROLE
+    cronIndex.Role.outCheck(cron, '0 3 * * *', db, guilds)
+
+}
+
+const syncData = async (guilds, Logger) => {
+
     const listRoleModel = [], listChannelModel = [], listUserModel = []
     const neededRoles = ['CR', 'Lead Dev', 'Tech', 'Alternant', 'Out', 'Weekly']
 
@@ -71,29 +103,5 @@ module.exports = async (client, Logger) => {
         Create.syncDb(db.Role, listRoleModel)
         Create.syncDb(db.Channel, listChannelModel)
         Create.syncDb(db.User, listUserModel)
-    }).then(async res =>  { 
-        console.log("Bot is Now Ready as", client.user.tag);
-        
     })
-    
-
-    
-    setInterval(() => {
-        NotionHandler.handle(client);
-    }, 30000);
-
-    // CR
-    cronIndex.Cr.reminder(cron, '0 00 18 * * MON-FRI', db, guild, 'first')
-    cronIndex.Cr.reminder(cron, '0 45 21 * * MON-FRI', db, guild, 'second')
-    cronIndex.Cr.reminder(cron, '0 00 22 * * MON-FRI', db, guild, 'last')
-    cronIndex.Cr.lead(cron, '10 0 22 * * FRI', db, guild)
-    // WEEKLY
-    cronIndex.Weekly.reminder(cron, '0 0 16 * * FRI', db, guild)
-    // ROLE
-    cronIndex.Role.outCheck(cron, '0 3 * * *', db, guilds)
-
-
-
-
-
 }
