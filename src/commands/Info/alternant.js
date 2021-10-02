@@ -14,7 +14,6 @@ module.exports = {
   execute: async (client, interaction) => {
     try {
         let roleId = await Get.item(db.Role, {where: {slug: 'alternant', guild: interaction.guild.id}}).then(i => {return i.dataValues._id ?? ''}).catch(e => e)
-        console.log(roleId)
 
         // collect all alternant [userId => nickname]
         let users = await db.User.findAll(
@@ -33,7 +32,6 @@ module.exports = {
             usersList.map(i => ids.push({id: i._id, nickname: i.nickname}))
             return ids
         })
-        console.log(users)  
         
         // define next week monday date
         const days =[1,7,6,5,4,3,2];

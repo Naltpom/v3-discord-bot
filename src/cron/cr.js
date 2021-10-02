@@ -75,7 +75,6 @@ class CronCr
                 } else {
                     reply = `Merci à tous pour vos CRs`;
                 }
-                console.log(reply);
 
                 guild.channels.cache.get(channelId.toString()).send(reply);
 

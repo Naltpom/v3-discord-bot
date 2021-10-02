@@ -31,6 +31,7 @@ async function initialize() {
     db.User = require('../src/models/user.model')(sequelize);
     db.CrLeaderboard = require('../src/models/crLeaderboard.model')(sequelize);
     db.Pr = require('../src/models/pr.model')(sequelize);
+    db.Notion = require('../src/models/notion.model')(sequelize);
 
     // sync all models with database
     await sequelize.sync();
