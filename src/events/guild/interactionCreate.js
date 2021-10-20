@@ -201,9 +201,10 @@ module.exports = async (client, interaction) => {
           //
           const days =[1,7,6,5,4,3,2];
           const d = new Date();
+          const d2 = new Date();
           
           const startDate = d.setDate(d.getDate()+days[d.getDay()]);
-          const endDate = d.setDate(d.getDate()+days[d.getDay()]+6);
+          const endDate = d2.setDate(d2.getDate()+days[d2.getDay()]+6);
           let status = false;
           if (d >= startDate && d <= endDate) {
             status = true;

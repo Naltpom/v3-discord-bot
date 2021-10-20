@@ -38,21 +38,6 @@ module.exports = {
         const d = new Date();
         d.setDate(d.getDate()+days[d.getDay()]);
         let date = [d.getDate(), d.getMonth(), d.getFullYear()].join('/');
-        
-
-        const components = new MessageActionRow()
-            .addComponents(
-                new MessageButton()
-                    .setCustomId('alternant-valid')
-                    .setLabel('VALIDER')
-                    .setStyle('SUCCESS')
-            )
-            .addComponents(
-                new MessageButton()
-                    .setCustomId('alternant-delete')
-                    .setLabel('REFUSER')
-                    .setStyle('DANGER')
-            )
 
         const embed = new MessageEmbed()
             .setTitle('Alternant')

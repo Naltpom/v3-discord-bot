@@ -25,8 +25,8 @@ class NotionHandler
                 ]
             }).then((async res => {
                 res.results.map(async item => {
-                    const {Ready, Collection, TYPE, Description, Author, Date} = item.properties;
-                    const notionUrl = item.url
+                    const {Ready, Collection, TYPE, Description, Author, Date: dateCreated} = item.properties;
+
                     if (
                         !Ready.checkbox 
                         || Author.title.length <= 0 
@@ -34,7 +34,7 @@ class NotionHandler
                         || TYPE.select === null 
                         || Collection.multi_select.length <= 0 
                         || item.properties['Lien de la page'].rich_text.length <= 0 
-                        || moment(Date.created_time).format('LL') < moment().add(0, 'days').format('LL')
+                        || moment(dateCreated.created_time).isBefore(moment().add(-3, 'days'))
                     ) return;
 
                     const page_id = item.id;
@@ -57,7 +57,7 @@ class NotionHandler
                             {name: 'Type', value: TYPE.select.name, inline: true},
                             {name: 'Description', value: Description.rich_text[0].plain_text},
                             {name: 'Author', value: Author.title[0].plain_text, inline: true},
-                            {name: 'Date', value: moment(Date.created_time).format('LL'), inline: true}
+                            {name: 'Date', value: moment(dateCreated.created_time).format('LL'), inline: true}
                         )
                     ;
         
