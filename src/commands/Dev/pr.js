@@ -156,8 +156,7 @@ module.exports = {
             const category = (await guild.channels.fetch(undefined)).find(cat => cat.name === 'pr' && cat.type === 'GUILD_CATEGORY')
 
             const channelName = UcFirst.format(application)  + ' ' + UcFirst.format(type) + ' ' + interaction.member.user.username
-            console.log(interaction.member.user)
-            // guild.channels.create(`pr-${int.count + 1}`, {parent: category})
+
             guild.channels.create(`${channelName}`, {parent: category})
                 .then(async channel => {
                     channel.send(`<@${interaction.member.user.id}>`)
