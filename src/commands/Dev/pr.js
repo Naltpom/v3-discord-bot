@@ -39,16 +39,16 @@ module.exports = {
             required: true,
             type: 3,
             choices: [ // name = projet , value => url du depot
-                {name: "Adriver", value: "adriver"},
                 {name: "Api", value: "api"},
-                {name: "Athena", value: "athena"},
-                {name: "Auth", value: "auth"},
+                {name: "Middleware", value: "middleware"},
+                {name: "Opti", value: "opti"},
+                {name: "Truck", value: "truck"},
+                {name: "Car", value: "car"},
                 {name: "Datads", value: "datads"},
                 {name: "Group", value: "group"},
-                {name: "Middleware", value: "middleware"},
-                {name: "Mobads", value: "mobads"},
+                {name: "Athena", value: "athena"},
+                {name: "Auth", value: "auth"},
                 {name: "Notifier", value: "notifier"},
-                {name: "Opti", value: "opti"},
                 {name: "Proxy Client", value: "proxy-client"},
                 {name: "Rgpd", value: "rgpd"},
                 {name: "Simulation", value: "simulation"},
@@ -155,7 +155,10 @@ module.exports = {
 
             const category = (await guild.channels.fetch(undefined)).find(cat => cat.name === 'pr' && cat.type === 'GUILD_CATEGORY')
 
-            guild.channels.create(`pr-${int.count + 1}`, {parent: category})
+            const channelName = UcFirst.format(application)  + ' ' + UcFirst.format(type) + ' ' + interaction.member.user.username
+            console.log(interaction.member.user)
+            // guild.channels.create(`pr-${int.count + 1}`, {parent: category})
+            guild.channels.create(`${channelName}`, {parent: category})
                 .then(async channel => {
                     channel.send(`<@${interaction.member.user.id}>`)
 
