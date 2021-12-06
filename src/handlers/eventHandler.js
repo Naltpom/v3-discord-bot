@@ -1,6 +1,6 @@
 const {readdirSync} = require("fs");
 
-module.exports = async (client, Logger) => {
+module.exports = async (client) => {
   const eventsDirs = readdirSync("./src/events/")
 
   eventsDirs.forEach(evtDir => {

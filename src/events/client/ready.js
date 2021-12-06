@@ -25,9 +25,10 @@ module.exports = async (client, Logger) => {
     console.log("Bot is Now Ready as", client.user.tag);
     
     // collect new Notion feed
-    setInterval(() => {
-        NotionHandler.handle(client);
-    }, 30000);
+    // @todo to upgrade with confluence
+    // setInterval(() => {
+    //     NotionHandler.handle(client);
+    // }, 30000);
 
     // CR
     cronIndex.Cr.reminder(cron, '0 00 18 * * MON-FRI', db, guild, 'first')
