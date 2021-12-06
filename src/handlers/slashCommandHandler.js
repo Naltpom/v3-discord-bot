@@ -1,6 +1,6 @@
 const fs = require("fs");
 
-module.exports = async (client, Logger) => {
+module.exports = async (client) => {
   const cmdFolders = fs.readdirSync("./src/commands");
 
   const cmdArr = [];
