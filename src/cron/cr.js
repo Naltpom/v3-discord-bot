@@ -32,7 +32,13 @@ class CronCr
                     if (
                         message.createdTimestamp > timestamp && 
                         null !== message.author.id && 
-                        message.content.substring(0, 2).toUpperCase() === "CR" && (
+                        // message.content.substring(0, 2).toUpperCase() === "CR" && 
+                        message.content.toLowerCase().includes('done') 
+                        && (
+                            message.content.toLowerCase().includes('in progress') || 
+                            message.content.toLowerCase().includes('in-progress') || 
+                            message.content.toLowerCase().includes('inprogress')
+                        ) && (
                             message.content.toLowerCase().includes('todo') || 
                             message.content.toLowerCase().includes('to do')
                         )
