@@ -53,6 +53,7 @@ module.exports = {
                 {name: "Rgpd", value: "rgpd"},
                 {name: "Simulation", value: "simulation"},
                 {name: "Weproov", value: "weproov"},
+                {name: "Bank", value: "bank"},
             ],
         },
         {
