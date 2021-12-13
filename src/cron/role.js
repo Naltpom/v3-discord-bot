@@ -1,5 +1,5 @@
 const Logger = require('../logger/logger');
-const Get = require('../Sequelize/get');
+const Get = require('../sequelize/get');
 
 class CronRole
 {
