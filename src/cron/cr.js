@@ -140,7 +140,7 @@ class CronCr
                 let msg = 'Tableau recapitulatif des CR non fait: \n\n'
                 newData.map(user => {
                     const total = user.count * ((user.count >= 5) ? 10 : (user.count === 4) ? 8 : 5)
-                    msg +=  `**${user.nickname}** \`${user.count}\` => *${total}*\n`
+                    msg +=  `**${user.nickname}** \`${user.count}\`\n`
                 })
 
                 const embed = new MessageEmbed()
