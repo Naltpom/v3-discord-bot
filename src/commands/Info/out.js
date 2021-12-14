@@ -3,7 +3,7 @@ require('dotenv-flow').config({silent: true});
 const env = process.env;
 const db = require('../../../config/db.config');
 const Get = require('../../sequelize/get');
-const {Op} = require ('Sequelize');
+const {Op} = require ('sequelize');
 const DateFormater = require('../../utils/dateFormat');
 
 async function getId(slug)  {
