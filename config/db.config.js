@@ -1,4 +1,4 @@
-require('dotenv-flow').config({silent: true});
+require('dotenv-flow').config({ silent: true });
 const env = process.env;
 const mysql = require('mysql2/promise');
 const { Sequelize } = require('sequelize');
@@ -7,6 +7,7 @@ initialize().then();
 
 let db;
 
+// eslint-disable-next-line no-undef
 module.exports = db = {};
 
 async function initialize() {
@@ -23,8 +24,8 @@ async function initialize() {
     const connection = await mysql.createConnection({ host, port, user, password });
     await connection.query(`CREATE DATABASE IF NOT EXISTS \`${database}\`;`);
 
-    // connect to db
-    const sequelize = new Sequelize(database, user, password, { dialect: 'mysql', logging: msg => Logger.log('info', msg, 'init-db') });
+	// connect to db
+	const sequelize = new Sequelize(database, user, password, { dialect: 'mysql', logging: msg => Logger.log('info', msg, 'init-db') });
 
     // init models and add them to the exported db object
     db.Channel = require('../src/models/channel.model')(sequelize);
