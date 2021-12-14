@@ -19,9 +19,8 @@ module.exports = {
             choices: [ // name = projet , value => url img
                 {name: "Adriver OPTI", value: "adriver"},
                 {name: "Mobads OPTI", value: "mobads"},
-                {name: "Simulation OPTI", value: "simulation"},
-                {name: "Adriver Truck", value: "truck"},
-                {name: "Adriver Car", value: "car"},
+                {name: "Sales-BI OPTI", value: "sales-bi"},
+                {name: "Adriver Group", value: "group"},
                 {name: "Datads", value: "datads"},
             ],
         },

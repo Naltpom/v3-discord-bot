@@ -3,32 +3,27 @@
         "adriver" : {
             "name" : "Adriver OPTI",
             "preprod" : "http://opti.adriver.tech/",
-            "prod" : "https://adriver.io/"
+            "prod" : "http://opti.adriver.io/"
         },
         "mobads" : {
             "name" : "Mobads OPTI",
             "preprod" : "http://opti.mobads.tech/",
-            "prod" : "https://mobads.io/"
+            "prod" : "http://opti.mobads.io/"
         },
-        "simulation" : {
-            "name" : "Simulation OPTI",
+        "sales-bi" : {
+            "name" : "Sales-BI OPTI",
             "preprod" : "http://simulation.adriver.tech/",
             "prod" : "http://simulation.adrivergroup.co/"
         },
-        "truck" : {
-            "name" : "Adriver Truck",
-            "preprod" : "http://qfdmkvh.cluster028.hosting.ovh.net/",
-            "prod" : "https://adriver.co/"
-        },
-        "car" : {
-            "name" : "Adriver Car",
-            "preprod" : "http://lfrfvtj.cluster028.hosting.ovh.net/",
-            "prod" : "https://mobads.co/"
+        "group" : {
+            "name" : "Adriver Group",
+            "preprod" : "http://bzjiiwq.cluster030.hosting.ovh.net/",
+            "prod" : "http://adrivergroup.co/"
         },
         "datads" : {
             "name" : "Datads",
-            "preprod" : "http://bzjiiwq.cluster030.hosting.ovh.net/",
-            "prod" : "https://adrivergroup.co/"
+            "preprod" : "https://dxcqzrw.cluster023.hosting.ovh.net/",
+            "prod" : "https://datads.co/"
         }
     }
 }
