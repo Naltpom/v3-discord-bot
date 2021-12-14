@@ -51,7 +51,7 @@ La commande PR permet de signifier sa PR
 ```
 Elle créé un nouveau channel _application type username_
 Ce channel dispose de 5 options
-- MERGE : 
+- MERGE :
 Permet au lead dev de signaler qu'il a merge la PR
 QUI ? Role "LEAD DEV"
 - GOOD :
@@ -68,20 +68,21 @@ Permet de signaler que la pr a été annulée
 Qui ? "LEAD DEV" ou le createur de la PR
 
 ### SUMMON
-Permet de faire une demande d'invocation
+Permet de faire une demande d'invocation  
 ```
 /summon {channel} ?{mentionable}
 ```
 
 ### UPDATE
-Permet de signaler une nouvelle preprod prod d'un site
+Permet de signaler une nouvelle preprod prod d'un site  
 ```
 /update {application} {type} ?{link}
 ```
 
 ## Cron
 ### CR
-Le cron cr permet de rappeler de faire le cr tous les jours de la semaine
+Le cron cr permet de rappeler de faire le cr tous les jours de la semaine  
+La détection des CR se fait entre 12h et l'heure du reminder  
 - Du lundi au vendredi à 18h00 => reminder
 - Du lundi au vendredi à 21h45 => reminder
 - Du lundi au vendredi à 22h00 => reminder et enregistrement des retardataires pour le leaderboard
