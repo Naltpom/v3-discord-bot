@@ -12,21 +12,17 @@ const db = require('../../../config/db.config');
  */
 
 module.exports = async (client, interaction) => {
-  const guild = client.guilds.cache.get(env.SERVER);           
+  const guild = client.guilds.cache.get(env.SERVER);
 
   try {
     if (interaction.isCommand()) {
       const cmd = client.slashCommands.get(interaction.commandName);
-      if (!cmd) return interaction.reply({content: "Something Went Wrong"});
-
+      if (!cmd) return interaction.reply({ content: 'Something Went Wrong' });
       cmd.execute(client, interaction);
-
-
-
-    } // end isCommand 
+    } // end isCommand
     else if (interaction.isButton()) {
-      const customId = interaction.customId
-      const embed = new MessageEmbed()
+      const customId = interaction.customId;
+      const embed = new MessageEmbed();
       const member = interaction.member;
       const userRoles = member.roles.member._roles;
       

@@ -2,7 +2,7 @@ const Logger = require('../logger/logger');
 const Get = require('../sequelize/get');
 const { Op, fn, col, literal } = require('sequelize');
 const { MessageEmbed  } = require("discord.js");
-const moment = require('moment')
+const moment = require('moment');
 
 class CronCr
 {
@@ -11,7 +11,11 @@ class CronCr
             try {
                 Logger.log('info',`{Class: CronCr, function: reminder(), params: ${scheduled}} `, 'Cron')
         
-                const channelId = await Get.item(db.Channel, {where: {slug: '_cr_tech_', guild: guild.id}}).then(i => i._id)
+                const channelId = await Get.item(db.Channel, {
+                    where: {
+                        slug: '_cr_tech_', guild: guild.id
+                    }
+                }).then(i => i._id);
                 const authors = await guild.channels.cache.get(channelId.toString()).messages.fetch()
         
                 // fetch users that havn't done CR
@@ -23,7 +27,7 @@ class CronCr
                             fn('isnull', fn('json_extract', col('role'), literal(`'$.out'`)))
                         ],
                     }
-                })
+                });
 
                 const channelMembers = [];
                 authors.map(message => {
