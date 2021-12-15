@@ -22,9 +22,9 @@ class Export
 			case 'item':
 				data = await item(db[table], options).then(data => data);
 				break;
+			default:
+				data = await collection(db[table], options).then(data => data);
 		}
-
-		data = await collection(db[table], options).then(data => data);
 
 		if (data.length === 0) {
 			await interaction.reply({content: "Il n'y a aucune données à exporter.", ephemeral: true});
