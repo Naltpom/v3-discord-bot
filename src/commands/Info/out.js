@@ -3,11 +3,11 @@ require('dotenv-flow').config({silent: true});
 const env = process.env;
 const db = require('../../../config/db.config');
 const Get = require('../../sequelize/get');
-const {Op} = require ('sequelize');
+const { Op } = require ('sequelize');
 const DateFormater = require('../../utils/dateFormat');
 
-async function getId(slug)  {
-    return await Get.item(db.Role, {where: {slug: slug, guild: guildId}}).then(i => i._id)
+async function getId(slug) {
+    return await Get.item(db.Role, { where: {slug: slug, guild: guildId}}).then(i => i._id)
 }
 
 module.exports = {
@@ -30,7 +30,7 @@ module.exports = {
             name: 'get',
             description: 'name of the application',
             type: 1,
-            options: [ 
+            options: [
                 {
                     name: 'when',
                     description: 'type of application',
@@ -55,7 +55,7 @@ module.exports = {
             name: 'post',
             description: 'add you date out',
             type: 1,
-            options: [ 
+            options: [
                 {
                     name: 'date_start',
                     description: 'set date start',
@@ -116,7 +116,7 @@ module.exports = {
             if ('get' === name) {embed = await get(options, db, guild)}
             if ('post' === name) {embed = await post(options, db, guild, user)}
             if ('remove' === name) {embed = await remove(options, db, guild, user)}
-            
+
 
             const mesg = await interaction.reply({ embeds: [embed], ephemeral: true });
 
@@ -133,7 +133,7 @@ async function get(obj, db, guild) {
 
     let filter = {guild: guild.id};
     let filterUser = {};
-    
+
     for (let option in nextOptions) {
         const ob = nextOptions[option]
 
@@ -167,7 +167,7 @@ async function get(obj, db, guild) {
                         [Op.lte]: currentDate
                     }
                 };
-            } 
+            }
         }
         if ('user' === ob.name) {
             filter = {...filter, userId: ob.value};
@@ -181,7 +181,7 @@ async function get(obj, db, guild) {
 
         if (array.length === 0) {
             array.push({
-                user: out.userId.toString(), 
+                user: out.userId.toString(),
                 dates: [{
                     stringStartDate: DateFormater.format(out.startDate),
                     stringEndDate: DateFormater.format(out.endDate),
@@ -200,11 +200,11 @@ async function get(obj, db, guild) {
                         endDate: out.endDate,
                     })
                     f = true;
-                } 
+                }
             })
             if (!f) {
                 array.push({
-                    user: out.userId.toString(), 
+                    user: out.userId.toString(),
                     dates: [{
                         stringStartDate: DateFormater.format(out.startDate),
                         stringEndDate: DateFormater.format(out.endDate),
@@ -233,10 +233,10 @@ async function get(obj, db, guild) {
             }
             embed.addField(`${userName}`, message)
         }
-    } 
+    }
     if (array.length === 0) {
         embed.setDescription(`Aucune donnée`)
-    }   
+    }
 
     console.log('Command => out get')
     return embed
@@ -299,7 +299,7 @@ async function post(obj, db, guild, user) {
 async function remove(obj, db, guild, user) {
     const embed = new MessageEmbed()
     embed.setTitle(`Suppression des dates OUT`);
-    
+
     const nextOptions = obj._hoistedOptions
     let userId = user;
     const member = await guild.members.fetch(user);
@@ -334,9 +334,9 @@ async function remove(obj, db, guild, user) {
                         [Op.gte]: currentDate
                     }
                 };
-            } 
-        } 
-    } 
+            }
+        }
+    }
     const outMember = await guild.members.fetch(userId);
     const outs = await Get.collection(db.Out, {where: filter});
 

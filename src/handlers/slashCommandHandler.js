@@ -17,8 +17,6 @@ module.exports = async (client) => {
         }
       })
     });
-
-    console.log("Ready Again");
     try {
       cmdArr.forEach(async cmd => {
         await client.guilds.cache.forEach(async guild =>{

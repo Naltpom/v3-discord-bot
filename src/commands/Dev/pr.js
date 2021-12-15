@@ -1,5 +1,5 @@
 const { Client, Interaction, MessageEmbed, MessageActionRow, MessageButton } = require('discord.js');
-require('dotenv-flow').config({silent: true});
+require('dotenv-flow').config({ silent: true });
 const env = process.env;
 const db = require('../../../config/db.config');
 const UcFirst = require('../../utils/ucFirst');
