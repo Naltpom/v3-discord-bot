@@ -1,9 +1,5 @@
 const { Client, Interaction } = require('discord.js');
-require('dotenv-flow').config({ silent: true });
-const { format } = require('../../utils/ucFirst');
-const { collection } = require("../../sequelize/get");
-const db = require('../../../config/db.config');
-const ObjectToCsv = require('objects-to-csv');
+const Export = require('../../utils/export.js');
 
 module.exports = {
     name: 'export',
@@ -36,36 +32,6 @@ module.exports = {
      * @returns {Promise<void>}
      */
     execute: async (client, interaction) => {
-        const options = interaction.options._hoistedOptions;
-
-        if (options.length) {
-            const table = format(options[0].value);
-            const data = await collection(db[table])
-                .then(data => data)
-            ;
-
-            const objectToFormat = [];
-            data.map(i => {
-                objectToFormat.push(i.dataValues);
-            });
-            try {
-                await (async () => {
-                    const csv = new ObjectToCsv(objectToFormat);
-                    const path = `./var/${table}.csv`;
-                    await csv.toDisk(path).then(() => {
-                        client.users.fetch(interaction.user.id).then(user => {
-                            user.send({
-                                content: "Voici l'export que tu as demandé",
-                                files: [path]
-                            });
-                        });
-                    });
-                })();
-
-                await interaction.reply({content: "L'export a bien été effectué", ephemeral: true});
-            } catch (err) {
-                console.log("Something Went Wrong => ", err);
-            }
-        }
+        await Export.exportCsv(client, interaction);
     }
 }

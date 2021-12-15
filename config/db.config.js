@@ -19,6 +19,7 @@ async function initialize() {
 		'password': env.DATABASE_PASSWORD,
 		'database': env.DATABASE_NAME,
 	};
+
     // create db if it doesn't already exist
     const { host, port, user, password, database } = config;
     const connection = await mysql.createConnection({ host, port, user, password });
@@ -38,6 +39,7 @@ async function initialize() {
     db.User.sync({ force: true });
     db.Role.sync({ force: true });
     db.Channel.sync({ force: true });
+
     // sync all models with database
     await sequelize.sync();
 }
