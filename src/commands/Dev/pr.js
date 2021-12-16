@@ -127,7 +127,7 @@ module.exports = {
                 .addComponents(
                     new MessageButton()
                         .setCustomId('pr-good')
-                        .setLabel('👌 GOOD')
+                        .setLabel('✅ GOOD')
                         .setStyle('SUCCESS')
                 )
                 .addComponents(
@@ -139,7 +139,7 @@ module.exports = {
                 .addComponents(
                     new MessageButton()
                         .setCustomId('pr-fixed')
-                        .setLabel('🤞 FIXED')
+                        .setLabel('🛠️ FIXED')
                         .setStyle('SECONDARY')
                 )
                 .addComponents(
