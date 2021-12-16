@@ -86,11 +86,11 @@ module.exports = async (client, interaction) => {
           await board.then(msg => {
             const fetchedMsg = msg;
             const boardEmbed = msg.embeds[0];
-            boardEmbed.addFields({name: `${interaction.member.nickname}`, value: `👌 good : ${DateFormater.now()}`, inline: false})
+            boardEmbed.addFields({name: `${interaction.member.nickname}`, value: `✅ good : ${DateFormater.now()}`, inline: false})
             fetchedMsg.edit({ embeds: [boardEmbed] })
           })
 
-          return interaction.reply({ content: '👌 Tu as bien validé la pr merci', ephemeral: true });
+          return interaction.reply({ content: '✅ Tu as bien validé la pr merci', ephemeral: true });
 
         } else if ('pr-warning' === customId) {
 
@@ -112,11 +112,11 @@ module.exports = async (client, interaction) => {
           await board.then(msg => {
             const fetchedMsg = msg;
             const boardEmbed = msg.embeds[0];
-            boardEmbed.addFields({name: `${interaction.member.nickname}`, value: `🤞 fixed : ${DateFormater.now()}`, inline: false})
+            boardEmbed.addFields({name: `${interaction.member.nickname}`, value: `🛠️ fixed : ${DateFormater.now()}`, inline: false})
             fetchedMsg.edit({ embeds: [boardEmbed] })
           })
 
-          return interaction.reply({ content: '🤞 Tu as bien corrigé les probleme sur la pr merci', ephemeral: true });
+          return interaction.reply({ content: '🛠️ Tu as bien corrigé les probleme sur la pr merci', ephemeral: true });
 
         } else if ('pr-aborded' === customId) {
           // must be author or leadDev
