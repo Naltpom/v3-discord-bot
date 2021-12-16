@@ -23,7 +23,6 @@ module.exports = async (client, Logger) => {
 
 
     console.log("Bot is Now Ready as", client.user.tag);
-    
     // collect new Notion feed
     // @todo to upgrade with confluence
     // setInterval(() => {
@@ -31,14 +30,15 @@ module.exports = async (client, Logger) => {
     // }, 30000);
 
     // CR
-    cronIndex.Cr.reminder(cron, '0 00 18 * * MON-FRI', db, guild, 'first')
-    cronIndex.Cr.reminder(cron, '0 45 21 * * MON-FRI', db, guild, 'second')
-    cronIndex.Cr.reminder(cron, '0 00 22 * * MON-FRI', db, guild, 'last')
-    cronIndex.Cr.lead(cron, '10 0 22 * * FRI', db, guild)
+    cronIndex.Cr.reminder(cron, '0 00 18 * * MON-FRI', db, guild, 'first');
+    cronIndex.Cr.reminder(cron, '0 45 21 * * MON-FRI', db, guild, 'second');
+    cronIndex.Cr.reminder(cron, '0 00 22 * * MON-FRI', db, guild, 'last');
+    cronIndex.Cr.lead(cron, '10 0 22 * * FRI', db, guild);
     // WEEKLY
-    cronIndex.Weekly.reminder(cron, '0 0 16 * * FRI', db, guild)
+    cronIndex.Weekly.reminder(cron, '0 0 16 * * FRI', db, guild);
     // ROLE
-    cronIndex.Role.outCheck(cron, '0 3 * * *', db, guilds)
+    cronIndex.Role.outCheck(cron, '0 3 * * *', db, guilds);
+    cronIndex.Document.export(cron, '* * * * *', 'Document', client);
 
 }
 
@@ -53,7 +53,7 @@ const syncData = async (guilds, Logger) => {
         console.log('Init roles')
         neededRoles.map(role => {
             const findRole = guild.roles.cache.find(guildRole => guildRole.name.toString() === role.toString())
-            if (!findRole) guild.roles.create().then(e => {e.setName(role), console.log(`${role} create`)})
+            if (!findRole) guild.roles.create().then(e => {e.setName(role); console.log(`${role} create`)})
         })
 
         // collect all roles from all servers
@@ -66,9 +66,9 @@ const syncData = async (guilds, Logger) => {
                 slug: sluger(role.name, {lower: true})
             })
         })
-        
+
         let channels = guild.channels.cache;
-                
+
         // collect all channels from all servers
         channels.map(channel => {
             listChannelModel.push({
@@ -78,7 +78,6 @@ const syncData = async (guilds, Logger) => {
                 slug: sluger(channel.name, {lower: true})
             })
         })
-        
         // collect all members from all servers
         const members = await guild.members.fetch();
         return await members.map(m => {
