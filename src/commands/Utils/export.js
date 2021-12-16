@@ -1,5 +1,5 @@
 const { Client, Interaction } = require('discord.js');
-const Export = require('../../utils/export.js');
+const { exportCsvInteraction } = require('../../utils/export.js');
 
 module.exports = {
     name: 'export',
@@ -32,6 +32,6 @@ module.exports = {
      * @returns {Promise<void>}
      */
     execute: async (client, interaction) => {
-        await Export.exportCsv(client, interaction);
+        await exportCsvInteraction(client, interaction);
     }
 }

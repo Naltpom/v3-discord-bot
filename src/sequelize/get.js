@@ -12,13 +12,9 @@ class Get {
     }
 
     static async collection(table, filters = {}) {
-
         // filter example => {_id: item.id}
         return await table.findAll(filters)
-            .then(obj => {
-                Logger.log('info', `${obj}`, 'database', 'get');
-                return obj
-            })
+            .then(obj => obj)
             .catch(e =>  Logger.log('error', e.message, 'database'))
         ;
     }

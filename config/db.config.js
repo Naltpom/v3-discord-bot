@@ -36,6 +36,7 @@ async function initialize() {
     db.CrLeaderboard = require('../src/models/crLeaderboard.model')(sequelize);
     db.Pr = require('../src/models/pr.model')(sequelize);
     db.Notion = require('../src/models/notion.model')(sequelize);
+    db.Document = require('../src/models/document.model')(sequelize);
     db.User.sync({ force: true });
     db.Role.sync({ force: true });
     db.Channel.sync({ force: true });
