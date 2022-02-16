@@ -50,16 +50,16 @@ module.exports = {
                     .addComponents(
                         new MessageButton()
                             .setCustomId(`alternant-yes-${user.id}`)
-                            .setLabel('Oui')
+                            .setLabel('Présent')
                             .setStyle('SUCCESS')
                     )
                     .addComponents(
                         new MessageButton()
                             .setCustomId(`alternant-non-${user.id}`)
-                            .setLabel('Non')
+                            .setLabel('Absent')
                             .setStyle('DANGER')
                     )
-                mesg = await interaction.followUp({ content: user.nickname, components: [components], fetchReply: true  });
+                mesg = await interaction.followUp({ content: `<@${user.id}>`, components: [components], fetchReply: true  });
             });
         });
 
