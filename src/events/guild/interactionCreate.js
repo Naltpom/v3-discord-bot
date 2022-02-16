@@ -103,17 +103,6 @@ module.exports = async (client, interaction) => {
 
           return interaction.reply({ content: '⚠️ Tu as bien indiqué un probleme sur la pr merci', ephemeral: true });
 
-        } else if ('pr-rebase' === customId) {
-
-          await board.then(msg => {
-            const fetchedMsg = msg;
-            const boardEmbed = msg.embeds[0];
-            boardEmbed.addFields({name: `${interaction.member.nickname ?? member.user.username ?? 'Pablo'}`, value: `🗃️ rebase : ${DateFormater.now()}`, inline: false})
-            fetchedMsg.edit({ embeds: [boardEmbed] })
-          })
-
-          return interaction.reply({ content: '🗃️ Tu as bien indiqué qu\'un rebase est a faire sur la pr merci', ephemeral: true });
-
         } else if ('pr-fixed' === customId) {
           // must be author
           if ((!hadRole(userRoles, await getId('lead-dev', guild)) && !(member.user.id === prId.userId))) {
