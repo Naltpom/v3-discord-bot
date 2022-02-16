@@ -59,7 +59,7 @@ module.exports = async (client, interaction) => {
             await board.then(msg => {
               const fetchedMsg = msg;
               const boardEmbed = msg.embeds[0];
-              boardEmbed.addFields({name: `${interaction.member.nickname}`, value: `🤙 merge : ${DateFormater.now()}`, inline: false})
+              boardEmbed.addFields({name: `${interaction.member.nickname ?? member.user.username ?? 'Pablo'}`, value: `🤙 merge : ${DateFormater.now()}`, inline: false})
               fetchedMsg.edit({ embeds: [boardEmbed] })
             })
           
@@ -86,7 +86,7 @@ module.exports = async (client, interaction) => {
           await board.then(msg => {
             const fetchedMsg = msg;
             const boardEmbed = msg.embeds[0];
-            boardEmbed.addFields({name: `${interaction.member.nickname}`, value: `✅ good : ${DateFormater.now()}`, inline: false})
+            boardEmbed.addFields({name: `${interaction.member.nickname ?? member.user.username ?? 'Pablo'}`, value: `✅ good : ${DateFormater.now()}`, inline: false})
             fetchedMsg.edit({ embeds: [boardEmbed] })
           })
 
@@ -97,7 +97,7 @@ module.exports = async (client, interaction) => {
           await board.then(msg => {
             const fetchedMsg = msg;
             const boardEmbed = msg.embeds[0];
-            boardEmbed.addFields({name: `${interaction.member.nickname}`, value: `⚠️ warning : ${DateFormater.now()}`, inline: false})
+            boardEmbed.addFields({name: `${interaction.member.nickname ?? member.user.username ?? 'Pablo'}`, value: `⚠️ warning : ${DateFormater.now()}`, inline: false})
             fetchedMsg.edit({ embeds: [boardEmbed] })
           })
 
@@ -108,7 +108,7 @@ module.exports = async (client, interaction) => {
           await board.then(msg => {
             const fetchedMsg = msg;
             const boardEmbed = msg.embeds[0];
-            boardEmbed.addFields({name: `${interaction.member.nickname}`, value: `🗃️ rebase : ${DateFormater.now()}`, inline: false})
+            boardEmbed.addFields({name: `${interaction.member.nickname ?? member.user.username ?? 'Pablo'}`, value: `🗃️ rebase : ${DateFormater.now()}`, inline: false})
             fetchedMsg.edit({ embeds: [boardEmbed] })
           })
 
@@ -123,7 +123,7 @@ module.exports = async (client, interaction) => {
           await board.then(msg => {
             const fetchedMsg = msg;
             const boardEmbed = msg.embeds[0];
-            boardEmbed.addFields({name: `${interaction.member.nickname}`, value: `🛠️ fixed : ${DateFormater.now()}`, inline: false})
+            boardEmbed.addFields({name: `${interaction.member.nickname ?? member.user.username ?? 'Pablo'}`, value: `🛠️ fixed : ${DateFormater.now()}`, inline: false})
             fetchedMsg.edit({ embeds: [boardEmbed] })
           })
 
@@ -154,7 +154,7 @@ module.exports = async (client, interaction) => {
           await board.then(msg => {
             const fetchedMsg = msg;
             const boardEmbed = msg.embeds[0];
-            boardEmbed.addFields({name: `${interaction.member.nickname}`, value: `🛑 aborded : ${DateFormater.now()}`, inline: false})
+            boardEmbed.addFields({name: `${interaction.member.nickname ?? member.user.username ?? 'Pablo'}`, value: `🛑 aborded : ${DateFormater.now()}`, inline: false})
             fetchedMsg.edit({ embeds: [boardEmbed] })
           })
 
