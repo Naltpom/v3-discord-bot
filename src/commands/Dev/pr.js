@@ -138,6 +138,12 @@ module.exports = {
                 )
                 .addComponents(
                     new MessageButton()
+                        .setCustomId('pr-rebase')
+                        .setLabel('🗃️ NEED REBASE')
+                        .setStyle('PRIMARY')
+                )
+                .addComponents(
+                    new MessageButton()
                         .setCustomId('pr-fixed')
                         .setLabel('🛠️ FIXED')
                         .setStyle('SECONDARY')
